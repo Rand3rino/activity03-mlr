@@ -3,6 +3,62 @@ title: "Activity 2 - Day 1"
 output: github_document
 ---
 
-```{setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(tidymodels)
+library(GGally)
 ```
+
+## Day 1
+### Load The Data
+```{r load_data, warning=FALSE}
+hfi <- readr::read_csv("https://www.openintro.org/data/csv/hfi.csv")
+```
+
+### Describe pf_score
+```{r describe_pf_score, warning=FALSE}
+hfi %>% 
+  ggplot(aes(x=pf_score)) +
+  geom_histogram() + 
+  theme_bw()
+```
+The variable `pf_score` has a negative skew, and the distribution appears to be bimodal. Very few countries have a personal freedom score of less than 5, however, there seems to be a division between many countries with a score averaging 7 and others averaging 9.
+
+### Comparing Killed vs Jailed
+```{r compare_2_variables, warning=FALSE}
+hfi %>% 
+  ggplot(aes(x=pf_expression_killed, y=pf_expression_jailed)) + 
+  geom_point() +
+  theme_bw()
+```
+There is a positive correlation between `pf_expression_jailed` and `pf_expression_killed`. However, the this relationship does not appear to be linear.
+
+### Pairwise Relationships
+```{r pairwise, warning=FALSE}
+hfi %>% 
+  select(ends_with("_score")) %>% 
+  ggpairs() + 
+  theme_bw()
+```
+
+These three variables appear to have a positive linear relationship, and there appears very few data points with a `pf_score` under 4 and `ef_score` over 9.
+
+### The Multiple Linear Regression Model
+```{r mlr}
+m_hr_ef <- lm(pf_score ~ hf_score + ef_score, data = hfi)
+tidy(m_hr_ef)
+```
+
+y = 1.464213e-11 + 2`hf_score` - 1`ef_score`
+
+When `hf_score` and `ef_score` are 0, then `pf_score` is 0. For each unit of `hf_score` then `pf_score` will increase by 2, and for each unit of `ef_score` then `pf_score` will decrease by 1.
+
+### Challenge: 3D Plots
+```{r 3d_plot, warning=FALSE}
+# Visual Idea from https://stackoverflow.com/questions/45052188/how-to-plot-3d-scatter-diagram-using-ggplot
+#library(plotly)
+# plot_ly(x=hfi$pf_score, y=hfi$hf_score, z=hfi$ef_score, type="scatter3d", mode="markers", color = hfi$pf_score) 
+```
+
+
