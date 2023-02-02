@@ -15,10 +15,13 @@ library(GGally)
 ```{r load_data, warning=FALSE}
 hfi <- readr::read_csv("https://www.openintro.org/data/csv/hfi.csv")
 ```
+```{r filter}
+hfi_2016 <- filter(hfi, year == 2016)
+```
 
 ### Describe pf_score
 ```{r describe_pf_score, warning=FALSE}
-hfi %>% 
+hfi_2016 %>% 
   ggplot(aes(x=pf_score)) +
   geom_histogram() + 
   theme_bw()
@@ -27,7 +30,7 @@ The variable `pf_score` has a negative skew, and the distribution appears to be 
 
 ### Comparing Killed vs Jailed
 ```{r compare_2_variables, warning=FALSE}
-hfi %>% 
+hfi_2016 %>% 
   ggplot(aes(x=pf_expression_killed, y=pf_expression_jailed)) + 
   geom_point() +
   theme_bw()
@@ -36,7 +39,7 @@ There is a positive correlation between `pf_expression_jailed` and `pf_expressio
 
 ### Pairwise Relationships
 ```{r pairwise, warning=FALSE}
-hfi %>% 
+hfi_2016 %>% 
   select(ends_with("_score")) %>% 
   ggpairs() + 
   theme_bw()
@@ -46,7 +49,7 @@ These three variables appear to have a positive linear relationship, and there a
 
 ### The Multiple Linear Regression Model
 ```{r mlr}
-m_hr_ef <- lm(pf_score ~ hf_score + ef_score, data = hfi)
+m_hr_ef <- lm(pf_score ~ hf_score + ef_score, data = hfi_2016)
 tidy(m_hr_ef)
 ```
 
@@ -58,7 +61,75 @@ When `hf_score` and `ef_score` are 0, then `pf_score` is 0. For each unit of `hf
 ```{r 3d_plot, warning=FALSE}
 # Visual Idea from https://stackoverflow.com/questions/45052188/how-to-plot-3d-scatter-diagram-using-ggplot
 #library(plotly)
-# plot_ly(x=hfi$pf_score, y=hfi$hf_score, z=hfi$ef_score, type="scatter3d", mode="markers", color = hfi$pf_score) 
+# plot_ly(x=hfi_2016$pf_score, y=hfi_2016$hf_score, z=hfi_2016$ef_score, type="scatter3d", mode="markers", color = hfi_2016$pf_score) 
 ```
 
+## Day 2
+### Is One Predictor Useful?
+```{r usefulness}
+# review any visual patterns
+hfi_2016 %>% 
+  select(pf_score, pf_expression_influence, pf_expression_control) %>% 
+  ggpairs()
 
+#fit the mlr model
+m_pf <- lm(pf_score ~ pf_expression_influence + pf_expression_control, data = hfi_2016)
+tidy(m_pf)
+```
+In a model of `pf_expression_influence` and `pf_expression_control` both variables are useful in explaining the y variable. The correlation values mean that each variable is strongly positively correlated with `pf_score`.
+
+```{r relationship}
+summary(m_pf)
+```
+With an alpha of 0.05, the p-value is less than alpha so we must reject the null hypothesis. This means that at least one of the variables in this model is impactful on our predictor, so either `pf_expression_influence` or `pf_expression_control` is correlated with `pf_score`.
+
+The standard error of the two variables differ by .008. 
+
+
+### Deciding on Important Variables
+The t-values of each variable is correct where the t-values = estimate / std. error. 
+TODO: 5,6,7
+
+### Model Fit
+```{r fit}
+glance(m_pf)
+```
+The R-squared value is .7267 which means that this model improves the prediction accuracy by 72.67% over using the average of `pf_score`. The r-squared value of the single linear regression model is .669 so this multiple linear regression model has an improved accuracy of 10%. 
+
+```{r plot_residuals}
+# obtain fitted values and residuals
+m_pf_aug <- augment(m_pf)
+
+# plot fitted values and residuals
+ggplot(data = m_pf_aug, aes(x = .fitted, y = .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  xlab("Fitted values") +
+  ylab("Residuals") + 
+  theme_bw()
+```
+
+The residual variation progressively decreases and there are larger negative deviations.
+
+```{r nearly normal residuals}
+ggplot(data = m_pf_aug, aes(x = .resid)) +
+  geom_histogram(binwidth = 0.25) +
+  xlab("Residuals") + 
+  theme_bw()
+```
+
+The residuals histogram appears to be slightly left skewed.
+
+### Prediction
+```{r record}
+hfi %>% 
+  filter(countries == "United States" & year == 2016) %>% 
+  select(pf_score, pf_expression_influence, pf_expression_control)
+```
+
+```{r prediction}
+hfi %>% 
+  filter(countries == "United States" & year == 2016) %>% 
+  predict(m_pf, .)
+```
+There error in the United States prediction is 0.52.
