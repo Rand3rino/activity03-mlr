@@ -197,7 +197,7 @@ continue ahead.
 
 ## Task 5: The multiple linear regression model
 
-You will not fit the following model:
+You will now fit the following model:
 
 $$
 \texttt{pf\\_score} = \beta_0 + \beta_1 \times \texttt{hf\\_score} + \beta_2 \times \texttt{ef\\_score} + \varepsilon

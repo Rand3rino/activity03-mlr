@@ -21,7 +21,8 @@ In this repository/directory, you should see five items:
 - `README.md` - the document you are currently reading.
 - `day01-fitting` - a folder that contains items for you to complete
   during the first 75-minute class meeting.
-  <!-- - `day02-assessing` - a folder that contains items for you to complete during the second 75-minute class meeting.-->
+- `day02-assessing` - a folder that contains items for you to complete
+  during the second 75-minute class meeting.
 
 We will explore most of these items over this week. Before doing that,
 you will first make your own copy of this repository.
@@ -83,7 +84,7 @@ be switching between RStudio and your GitHub repo (that you previously
 forked).
 
 1.  In RStudio, click on the
-    <img src="../README-img/rproj-icon.png" alt="RStudio Project" width = "20"/>
+    <img src="README-img/rproj-icon.png" alt="RStudio Project" width = "20"/>
     icon (the icon below the Edit drop-down menu).
 2.  Click on **Version Control** on the *New Project Wizard* pop-up.
 3.  Click on **Git** and you should be on a “Clone Git Repository” page.
@@ -95,13 +96,11 @@ forked).
 7.  The “Project directory name” text field should have automatically
     populated with `activity03-mlr`. If yours did not (this is usually
     an issue on Macs),
-
-- Click back into the “Repository URL” text field.
-- Highlight any bit of this text (it does not seem to matter what or how
-  much).
-- Press Ctrl/Cmd and the “Project directory name” should now have
-  automatically populated with `activity03-mlr`.
-
+    - Click back into the “Repository URL” text field.
+    - Highlight any bit of this text (it does not seem to matter what or
+      how much).
+    - Press Ctrl/Cmd and the “Project directory name” should now have
+      automatically populated with `activity03-mlr`.
 8.  In the “Create project as subdirectory of” field, click on
     **Browse…**. Create a **New Folder** called “STA 631”, then within
     this folder, create a **New Folder** called “Activities”, then click
@@ -156,9 +155,64 @@ Read these directions first, then work through them.
 The rest of this `README` document contains tasks/directions for the
 second class meeting of this week.
 
-## Task 3: TBD
+## Task 3: Updating your forked GitHub repo
 
-This will be updated on Thu, Feb 2.
+You will need to start reading these directions back at my
+`gvsu-sta631/activity03-mlr` GitHub repo **and** have your forked
+`username/activity03-mlr` GitHub repo handy. I recommend that you have
+my repo opened on one half of your screen and your repo opened on the
+other half. Read these directions first, then work through them.
+
+1.  At the top of your `username/activity03-mlr` repo (above the repo
+    contents section), verify that you see a message that looks
+    something like:
+
+> This branch is X commits behind gvsu-sta631:main.
+
+2.  Click on the hyperlinked “X commits behind” portion of that message
+    to be taken to a **Comparing changes** page.
+3.  Verify that your drop-down menu options specify:
+    - base repository: username/activity03-mlr
+    - base: main
+    - head repository: gvsu-sta631/activity03-mlr
+    - compare: main
+4.  Also verify that you have a message directly below this that says:
+
+> ✓ Able to merge. These branches can be automatically merged.
+
+Flag me if you see something different.
+
+5.  Click on the green **Create pull request** button under this
+    previous message. Note you can look at the changes that I made, if
+    you so desire, by scrolling down. However, this is not necessary.
+6.  On the next page, provide a short descriptive message in the “Title”
+    box (e.g., “Adding Day 2 materials”). You can also provide a more
+    detailed message in the “Leave a comment” box if you choose.
+7.  Click on the green **Create pull request** button.
+8.  On the next screen which is titled the same thing as what you
+    provided in the “Title” box on the previous screen, you will be
+    presented with a bunch of information. If you scroll down a little,
+    you should see a green check mark with a message that specifies:
+
+> This branch has no conflicts with the base branch
+
+And you can click on the green **Merge pull request**.
+
+9.  You will be provided with with an opportunity to provide another
+    meaningful message (or accept the default message). Finally, click
+    on the green **Confirm merge** button. You can now work directly
+    from your `username/activity03-mlr` repo.
+
+In summary, what you just did is pulled my changes into your repository.
+Git and GitHub refer to this as a “pull request” because you are asking
+to pull items into your repo.
+
+## Task 4: Assessing a multiple linear regression model
+
+In your `username/activity03-mlr` repo, go into the `day02-assessing`
+subfolder and follow the tasks listed in the `README`. You will continue
+to work in your `activity03-day01.Rmd` file that you started during Day
+1 of this activity.
 
 ## Attribution
 
