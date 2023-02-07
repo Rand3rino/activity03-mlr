@@ -234,7 +234,7 @@ can get a similar measurement for MLR models.
 - Create a new R code chunk and type the following code.
 
   ``` r
-  glance(m1)
+  glance(m_pf)
   ```
 
 After doing this and running the code, answer the following questions:
@@ -249,7 +249,7 @@ After doing this and running the code, answer the following questions:
 Looking back at your `summary(m_pf)` output, you may also have noticed
 that the RSE (residual standard error) is also provided:
 
-> `Residual standard error: 0.8077 on 1375 degrees of freedom`
+> `Residual standard error: 0.8077 on 1375 degrees of freedom`  
 > `(80 observations deleted due to missingness)`
 
 I often use this value (and the $R^2$ value) to compare between
