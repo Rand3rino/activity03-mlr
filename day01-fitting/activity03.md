@@ -163,7 +163,11 @@ The standard error of the two variables differ by .008.
 ### Deciding on Important Variables
 
 The t-values of each variable is correct where the t-values = estimate /
-std. error. TODO: 5,6,7
+std. error. These values are t-test statistics. These statistics values
+have 159 degrees of freedom.
+
+The variable `pf_expression_control` has a lower p-value so it seems
+more important than the other.
 
 ### Model Fit
 
